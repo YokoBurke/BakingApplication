@@ -20,4 +20,6 @@ public class MiriamsList {
         return miriamsList;
     }
 
+    //Note 1:http://www.javacreed.com/simple-gson-example/
+    //Note 2: https://guides.codepath.com/android/leveraging-the-gson-library#mapping-java-date-objects
 }
