@@ -16,7 +16,7 @@ public class recipe {
         recipeIngredeints = myIngredeints;
         recipeSteps = mySteps;
         recipeServings = myServings;
-        
+
     }
 
 }
