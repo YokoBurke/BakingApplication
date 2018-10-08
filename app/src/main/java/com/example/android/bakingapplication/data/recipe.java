@@ -19,4 +19,24 @@ public class recipe {
 
     }
 
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public String getRecipeName(){
+        return recipeName;
+    }
+
+    public ArrayList<ingredients> getRecipeIngredeints(){
+        return recipeIngredeints;
+    }
+
+    public ArrayList<steps> getRecipeSteps(){
+        return recipeSteps;
+    }
+
+    public int getRecipeServings(){
+        return recipeServings;
+    }
+
 }
