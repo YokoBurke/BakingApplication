@@ -7,6 +7,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -18,11 +19,21 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
 
     private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private static final int SEARCH_LOADER = 125;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycle_recipe_card);
+        recyclerView.setHasFixedSize(true);
+
+        mLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        getSupportLoaderManager().initLoader(SEARCH_LOADER, null, this);
     }
 
 
@@ -76,9 +87,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(@NonNull Loader<String> loader) {
 
-        }
-
     }
 
-
 }
+
+
