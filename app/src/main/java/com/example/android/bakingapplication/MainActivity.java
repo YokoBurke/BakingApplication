@@ -11,16 +11,25 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.example.android.bakingapplication.data.MiriamsList;
+import com.example.android.bakingapplication.data.recipe;
 import com.example.android.bakingapplication.utilities.NetworkUtils;
+import com.example.android.bakingapplication.utilities.RecipeAdapter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
+
+    final static String CLASS_NAME = MainActivity.class.getSimpleName();
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private static final int SEARCH_LOADER = 125;
+
+    private List<recipe> myRecipeList;
+    private RecipeAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public String loadInBackground() {
                 URL recipeUrl = NetworkUtils.checkURL();
+                Log.i(CLASS_NAME, recipeUrl.toString());
                 String myString = "";
                 try {
                     myString = NetworkUtils.getResponseFromHttpUrl(recipeUrl);
@@ -81,6 +91,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String data) {
+
+        myRecipeList = MiriamsList.parseJSON(data);
+        mAdapter = new RecipeAdapter(this, (List<recipe>) myRecipeList, new RecipeAdapter.ListItemClickListener() {
+            @Override
+            public void onListItemClick(int clickedItemIndex) {
+
+            }
+        });
+        recyclerView.setAdapter(mAdapter);
 
     }
 

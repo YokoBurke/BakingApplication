@@ -13,7 +13,7 @@ import java.nio.charset.Charset;
 
 public class NetworkUtils {
 
-    final static String CLASS_NAME = String.class.getSimpleName();
+    final static String CLASS_NAME = NetworkUtils.class.getSimpleName();
     final static String myURL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
 
@@ -35,6 +35,7 @@ public class NetworkUtils {
         InputStream inputStream = null;
 
         try {
+            Log.i(CLASS_NAME, url.toString());
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setReadTimeout(10000);
