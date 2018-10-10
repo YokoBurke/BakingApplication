@@ -64,8 +64,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull RecipeAdapter.MyViewHolder holder, int position) {
 
-        String myRecipeName = myRecipe.get(position).getRecipeName();
-        String myServingNumber = Integer.toString(myRecipe.get(position).getRecipeServings());
+        String myRecipeName = myRecipe.get(position).getName();
+        String myServingNumber = Integer.toString(myRecipe.get(position).getServings());
 
         holder.recipeNameTextView.setText(myRecipeName);
         holder.servingsTextView.setText(myServingNumber);

@@ -4,39 +4,39 @@ import java.util.ArrayList;
 
 public class recipe {
 
-    int recipeId;
-    String recipeName;
-    ArrayList<ingredients> recipeIngredeints;
-    ArrayList<steps> recipeSteps;
-    int recipeServings;
+    int id;
+    String name;
+    ArrayList<ingredients> ingredients;
+    ArrayList<steps> steps;
+    int servings;
 
     public recipe(int myID, String myName, ArrayList<ingredients> myIngredeints, ArrayList<steps> mySteps, int myServings) {
-        recipeId = myID;
-        recipeName = myName;
-        recipeIngredeints = myIngredeints;
-        recipeSteps = mySteps;
-        recipeServings = myServings;
+        id = myID;
+        name = myName;
+        ingredients = myIngredeints;
+        steps = mySteps;
+        servings = myServings;
 
     }
 
-    public int getRecipeId() {
-        return recipeId;
+    public int getId() {
+        return id;
     }
 
-    public String getRecipeName(){
-        return recipeName;
+    public String getName(){
+        return name;
     }
 
-    public ArrayList<ingredients> getRecipeIngredeints(){
-        return recipeIngredeints;
+    public ArrayList<ingredients> getIngredients(){
+        return ingredients;
     }
 
-    public ArrayList<steps> getRecipeSteps(){
-        return recipeSteps;
+    public ArrayList<steps> getSteps(){
+        return steps;
     }
 
-    public int getRecipeServings(){
-        return recipeServings;
+    public int getServings(){
+        return servings;
     }
 
 }
