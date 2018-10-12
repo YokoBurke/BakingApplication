@@ -7,6 +7,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private List<recipe> myRecipeList;
     private RecipeAdapter mAdapter;
 
+    private boolean isTablet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +42,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         recyclerView = (RecyclerView) findViewById(R.id.recycle_recipe_card);
         recyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(this);
+        isTablet = getResources().getBoolean(R.bool.is_tablet);
+
+        if (isTablet) {
+            mLayoutManager = new GridLayoutManager(this, 3);
+        } else {
+            mLayoutManager = new LinearLayoutManager(this);
+        }
+
+
         recyclerView.setLayoutManager(mLayoutManager);
 
         getSupportLoaderManager().initLoader(SEARCH_LOADER, null, this);
