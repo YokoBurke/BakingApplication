@@ -1,6 +1,7 @@
 package com.example.android.bakingapplication.utilities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.bakingapplication.DetailActivity;
 import com.example.android.bakingapplication.R;
 import com.example.android.bakingapplication.data.recipe;
 
@@ -45,8 +47,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
 
             int clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
-
             // add intent here
+
+            Intent intent = new Intent(myContext, DetailActivity.class);
+            intent.putExtra(Intent.EXTRA_TEXT, myRecipe.get(clickedPosition));
+
 
         }
     }

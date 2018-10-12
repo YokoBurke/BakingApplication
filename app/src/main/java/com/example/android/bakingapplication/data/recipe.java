@@ -1,8 +1,11 @@
 package com.example.android.bakingapplication.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class recipe {
+public class recipe implements Parcelable {
 
     int id;
     String name;
@@ -18,6 +21,14 @@ public class recipe {
         servings = myServings;
 
     }
+
+    public recipe(Parcel inParcel) {
+        id = inParcel.readInt();
+        name = inParcel.readString();
+        ingredients = inParcel.readBundle(com.example.android.bakingapplication.data.ingredients);
+    }
+
+
 
     public int getId() {
         return id;
@@ -39,4 +50,24 @@ public class recipe {
         return servings;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
+
+    public static final Parcelable.Creator<recipe> CREATOR = new Parcelable.Creator<recipe>() {
+        public recipe createFromParcel(Parcel in){
+            return new recipe(in);
+        }
+
+        public recipe[] newArray(int size) {
+            return new recipe[size];
+        }
+
+    };
 }
