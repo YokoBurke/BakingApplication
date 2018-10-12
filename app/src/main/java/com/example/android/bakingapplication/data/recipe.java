@@ -4,8 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class recipe implements Parcelable {
+
 
     int id;
     String name;
@@ -22,12 +24,11 @@ public class recipe implements Parcelable {
 
     }
 
-    public recipe(Parcel inParcel) {
-        id = inParcel.readInt();
-        name = inParcel.readString();
-        ingredients = inParcel.readBundle(com.example.android.bakingapplication.data.ingredients);
-    }
-
+     public recipe(Parcel inParcel) {
+         id = inParcel.readInt();
+         name = inParcel.readString();
+         ingredients = inParcel.readParcelable(com.example.android.bakingapplication.data.ingredients.class.getClassLoader());
+     }
 
 
     public int getId() {
