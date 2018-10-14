@@ -27,6 +27,8 @@ public class recipe implements Parcelable {
          id = inParcel.readInt();
          name = inParcel.readString();
          ingredients = inParcel.readParcelable(com.example.android.bakingapplication.data.ingredients.class.getClassLoader());
+         steps = inParcel.readParcelable(com.example.android.bakingapplication.data.steps.class.getClassLoader());
+         servings = inParcel.readInt();
      }
 
 
