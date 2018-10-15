@@ -17,12 +17,15 @@ import java.util.List;
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.MyViewHolder> {
 
     private static final String LOG_TAG = IngredientsAdapter.class.getSimpleName();
+
     private List<ingredients> myIngredients;
     private Context myContext;
 
     public IngredientsAdapter(Context myContextData, List<ingredients> myIngredientsData){
         myContext = myContextData;
         myIngredients = myIngredientsData;
+
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -61,6 +64,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         holder.quantityTextView.setText(Integer.toString(myQuantity));
         holder.measureTextView.setText(myMeasure);
         holder.ingredientTextView.setText(myIngredient);
+
+        Log.i(LOG_TAG, "Constructor called");
 
 
     }

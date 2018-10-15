@@ -26,8 +26,10 @@ public class recipe implements Parcelable {
      public recipe(Parcel inParcel) {
          id = inParcel.readInt();
          name = inParcel.readString();
-         ingredients = inParcel.readParcelable(com.example.android.bakingapplication.data.ingredients.class.getClassLoader());
-         steps = inParcel.readParcelable(com.example.android.bakingapplication.data.steps.class.getClassLoader());
+         //ingredients = inParcel.readParcelable(com.example.android.bakingapplication.data.ingredients.class.getClassLoader());
+         ingredients = inParcel.readArrayList(com.example.android.bakingapplication.data.ingredients.class.getClassLoader());
+         //steps = inParcel.readParcelable(com.example.android.bakingapplication.data.steps.class.getClassLoader());
+         steps = inParcel.readArrayList(com.example.android.bakingapplication.data.steps.class.getClassLoader());
          servings = inParcel.readInt();
      }
 
@@ -59,6 +61,11 @@ public class recipe implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeList(ingredients);
+        parcel.writeList(steps);
+        parcel.writeInt(servings);
 
     }
 

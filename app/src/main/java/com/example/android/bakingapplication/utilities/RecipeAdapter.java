@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import com.example.android.bakingapplication.data.recipe;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHolder> {
+
+    private static final String LOG_TAG = RecipeAdapter.class.getSimpleName();
 
     private List<recipe> myRecipe;
     private Context myContext;
@@ -51,6 +54,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
 
             Intent intent = new Intent(myContext, DetailActivity.class);
             intent.putExtra(Intent.EXTRA_TEXT, myRecipe.get(clickedPosition));
+
+            Log.i(LOG_TAG, "Name is " + myRecipe.get(clickedPosition).getName());
             myContext.startActivity(intent);
 
 

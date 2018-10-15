@@ -1,6 +1,7 @@
 package com.example.android.bakingapplication;
 
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.android.bakingapplication.data.ingredients;
+import com.example.android.bakingapplication.data.recipe;
 import com.example.android.bakingapplication.data.steps;
 import com.example.android.bakingapplication.utilities.IngredientsAdapter;
 import com.example.android.bakingapplication.utilities.NetworkUtils;
@@ -26,6 +28,8 @@ public class DetailActivity extends AppCompatActivity{
     private RecyclerView stepsRecyclerView;
     private RecyclerView ingredientsRecyclerView;
 
+
+    private recipe myRecipe;
     private IngredientsAdapter mIngredientsAdapter;
     private StepsAdapter mStepsAdapter;
 
@@ -39,6 +43,17 @@ public class DetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        Intent childIntent = getIntent();
+        if (childIntent.hasExtra(Intent.EXTRA_TEXT)){
+
+            myRecipe = (recipe) childIntent.getParcelableExtra(Intent.EXTRA_TEXT);
+
+        }
+        Log.i(CLASS_NAME, "recipe is " + myRecipe.getName());
+
+        myIngredients = myRecipe.getIngredients();
+        mySteps = myRecipe.getSteps();
+
         ingredientsRecyclerView = (RecyclerView) findViewById(R.id.recycle_ingredients);
         ingredientsRecyclerView.setHasFixedSize(true);
 
@@ -47,8 +62,9 @@ public class DetailActivity extends AppCompatActivity{
 
 
 
-        stepsLayoutManager = new LinearLayoutManager(this);
+
         ingredientsLayoutManager = new LinearLayoutManager(this);
+        stepsLayoutManager = new LinearLayoutManager(this);
 
         mIngredientsAdapter = new IngredientsAdapter(this, myIngredients);
         mStepsAdapter = new StepsAdapter(this, mySteps, new StepsAdapter.ListItemClickListner() {
@@ -58,8 +74,10 @@ public class DetailActivity extends AppCompatActivity{
             }
         });
 
-
+        ingredientsRecyclerView.setLayoutManager(ingredientsLayoutManager);
         ingredientsRecyclerView.setAdapter(mIngredientsAdapter);
+
+        stepsRecyclerView.setLayoutManager(stepsLayoutManager);
         stepsRecyclerView.setAdapter(mStepsAdapter);
 
         Log.i(CLASS_NAME, "Adapter Set");
