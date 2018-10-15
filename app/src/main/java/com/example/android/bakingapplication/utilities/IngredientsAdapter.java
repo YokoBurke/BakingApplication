@@ -3,6 +3,7 @@ package com.example.android.bakingapplication.utilities;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     private static final String LOG_TAG = IngredientsAdapter.class.getSimpleName();
     private List<ingredients> myIngredients;
     private Context myContext;
+
+    public IngredientsAdapter(Context myContextData, List<ingredients> myIngredientsData){
+        myContext = myContextData;
+        myIngredients = myIngredientsData;
+    }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -40,6 +46,8 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         int myLayoutId = R.layout.ingredient_item;
         View itemView = LayoutInflater.from(parent.getContext()).inflate(myLayoutId, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(itemView);
+
+        Log.i(LOG_TAG, "Adapter called.  OnCreateViewHolder");
         return myViewHolder;
 
     }

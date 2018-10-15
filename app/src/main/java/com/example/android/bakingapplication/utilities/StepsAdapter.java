@@ -21,6 +21,18 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewH
     private static String LOG_TAG = StepsAdapter.class.getSimpleName();
     private List<steps> myStepsData;
     private Context myContext;
+    final private ListItemClickListner mOnClickListener;
+
+    public interface ListItemClickListner{
+        void onListItemClick(int clickedItemIndex);
+    }
+
+    public StepsAdapter(Context context, List<steps> StepsData, ListItemClickListner listener){
+        myStepsData = StepsData;
+        myContext = context;
+        mOnClickListener = listener;
+
+    }
 
     class MyStepsViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.short_desc_steps) TextView shortDescTextView;
