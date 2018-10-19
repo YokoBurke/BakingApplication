@@ -53,6 +53,8 @@ public class DetailActivity extends AppCompatActivity{
 
         myIngredients = myRecipe.getIngredients();
         mySteps = myRecipe.getSteps();
+        int x = mySteps.size();
+        Log.i(CLASS_NAME, "Size of mySteps is " + Integer.toString(x));
 
         ingredientsRecyclerView = (RecyclerView) findViewById(R.id.recycle_ingredients);
         ingredientsRecyclerView.setHasFixedSize(true);

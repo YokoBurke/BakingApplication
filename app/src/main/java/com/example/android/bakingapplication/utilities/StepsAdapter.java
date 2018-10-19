@@ -3,6 +3,7 @@ package com.example.android.bakingapplication.utilities;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,14 @@ import android.widget.TextView;
 import com.example.android.bakingapplication.R;
 import com.example.android.bakingapplication.data.steps;
 
-import java.util.List;
+import org.w3c.dom.Text;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.List;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewHolder> {
 
     private static String LOG_TAG = StepsAdapter.class.getSimpleName();
+
     private List<steps> myStepsData;
     private Context myContext;
     final private ListItemClickListner mOnClickListener;
@@ -31,15 +32,29 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewH
         myStepsData = StepsData;
         myContext = context;
         mOnClickListener = listener;
+        Log.i(LOG_TAG, "the number of steps in constructor is " + Integer.toString(myStepsData.size()));
 
     }
 
-    class MyStepsViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.short_desc_steps) TextView shortDescTextView;
+    class MyStepsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+
+        public TextView shortDescTextView;
+
 
         public MyStepsViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            shortDescTextView = (TextView) itemView.findViewById(R.id.short_desc_steps);
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            int clickedPosition = getAdapterPosition();
+            mOnClickListener.onListItemClick(clickedPosition);
+
+            //Intentを入れる
 
         }
     }
@@ -47,7 +62,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewH
     @NonNull
     @Override
     public StepsAdapter.MyStepsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        int myLayoutId = R.layout.ingredient_item;
+        int myLayoutId = R.layout.steps_item;
         View itemView = LayoutInflater.from(parent.getContext()).inflate(myLayoutId, parent, false);
         MyStepsViewHolder myStepsViewHolder = new MyStepsViewHolder(itemView);
         return myStepsViewHolder;
@@ -57,6 +72,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewH
     public void onBindViewHolder(@NonNull StepsAdapter.MyStepsViewHolder holder, int position) {
 
         String mySteps = myStepsData.get(position).getShortDescription();
+        Log.i(LOG_TAG, mySteps);
+
         holder.shortDescTextView.setText(mySteps);
 
 

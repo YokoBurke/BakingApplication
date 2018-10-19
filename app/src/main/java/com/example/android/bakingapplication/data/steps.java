@@ -28,9 +28,7 @@ public class steps implements Parcelable {
         return description;
     }
 
-    public String getVideoURL(){
-        return videoURL;
-    }
+    public String getVideoURL(){return videoURL;}
 
     public steps (Parcel inParcel){
         id = inParcel.readInt();
