@@ -1,5 +1,6 @@
 package com.example.android.bakingapplication.utilities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -39,7 +40,8 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewH
 
         public MyStepsViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            // ButterKnife.bind(this, itemView);
+            ButterKnife.bind((Activity) myContext);
 
         }
     }
