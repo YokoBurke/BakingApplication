@@ -1,9 +1,8 @@
 package com.example.android.bakingapplication;
 
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,7 +11,6 @@ import com.example.android.bakingapplication.data.ingredients;
 import com.example.android.bakingapplication.data.recipe;
 import com.example.android.bakingapplication.data.steps;
 import com.example.android.bakingapplication.utilities.IngredientsAdapter;
-import com.example.android.bakingapplication.utilities.NetworkUtils;
 import com.example.android.bakingapplication.utilities.StepsAdapter;
 
 import java.util.ArrayList;

@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.example.android.bakingapplication.R;
 import com.example.android.bakingapplication.data.steps;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewHolder> {
