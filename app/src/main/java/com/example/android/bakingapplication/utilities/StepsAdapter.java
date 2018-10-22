@@ -1,6 +1,7 @@
 package com.example.android.bakingapplication.utilities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.bakingapplication.R;
+import com.example.android.bakingapplication.StepVideoActivity;
 import com.example.android.bakingapplication.data.steps;
 
 import org.w3c.dom.Text;
@@ -54,7 +56,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewH
             int clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
 
-            //Intentを入れる
+            Intent intent = new Intent(myContext, StepVideoActivity.class);
+            intent.putExtra(Intent.EXTRA_TEXT, myStepsData.get(clickedPosition));
+            myContext.startActivity(intent);
 
         }
     }

@@ -7,18 +7,28 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    
+
     <style name="card_title">
         <item name="android:textColor">#bc5100</item>
         <item name="android:textSize">26sp</item>
         <item name="android:paddingTop">4dp</item>
         <item name="android:paddingLeft">4dp</item>
     </style>
+
     <style name="card_servings">
         <item name="android:textColor">#bc5100</item>
         <item name="android:textSize">18sp</item>
         <item name="android:paddingBottom">4dp</item>
         <item name="android:paddingLeft">4dp</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
