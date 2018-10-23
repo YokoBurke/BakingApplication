@@ -10,13 +10,18 @@ import android.widget.TextView;
 import com.example.android.bakingapplication.data.recipe;
 import com.example.android.bakingapplication.data.steps;
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
@@ -24,7 +29,9 @@ import com.google.android.exoplayer2.util.Util;
 
 import org.w3c.dom.Text;
 
-public class StepVideoActivity extends AppCompatActivity {
+public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.EventListener  {
+
+    private final String LOG_TAG = StepVideoActivity.class.getSimpleName();
 
     private TextView stepIdTextView;
     private TextView shortDescTextView;
@@ -67,10 +74,18 @@ public class StepVideoActivity extends AppCompatActivity {
             mSimpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector, loadControl);
             mPlayerView.setPlayer(mSimpleExoPlayer);
 
+            mSimpleExoPlayer.addListener(this);
+
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(this, Util.getUserAgent(this, "BakingApplication")), new DefaultExtractorsFactory(), null, null);
             mSimpleExoPlayer.prepare(mediaSource);
             mSimpleExoPlayer.setPlayWhenReady(true);
         }
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        mSimpleExoPlayer.stop();
     }
 
     private void releasePlayer() {
@@ -85,4 +100,37 @@ public class StepVideoActivity extends AppCompatActivity {
         releasePlayer();
     }
 
+    @Override
+    public void onTimelineChanged(Timeline timeline, Object manifest) {
+
+    }
+
+    @Override
+    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+
+    }
+
+    @Override
+    public void onLoadingChanged(boolean isLoading) {
+
+    }
+
+    @Override
+    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+        if((playbackState == ExoPlayer.STATE_READY) && playWhenReady){
+            Log.d(LOG_TAG, "onPlayerStateChanged: PLAYING");
+        } else if((playbackState == ExoPlayer.STATE_READY)){
+            Log.d(LOG_TAG, "onPlayerStateChanged: PAUSED");
+        }
+    }
+
+    @Override
+    public void onPlayerError(ExoPlaybackException error) {
+
+    }
+
+    @Override
+    public void onPositionDiscontinuity() {
+
+    }
 }
