@@ -8,4 +8,8 @@
 
     <string name="steps_next">Next Step</string>
     <string name="steps_previous">Previous Step</string>
+
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="restart">Restart</string>
 </resources>

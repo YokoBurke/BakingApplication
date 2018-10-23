@@ -1,13 +1,18 @@
 package com.example.android.bakingapplication;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.media.session.MediaButtonReceiver;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.android.bakingapplication.data.recipe;
 import com.example.android.bakingapplication.data.steps;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -27,8 +32,6 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
-import org.w3c.dom.Text;
-
 public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.EventListener  {
 
     private final String LOG_TAG = StepVideoActivity.class.getSimpleName();
@@ -39,6 +42,10 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
 
     private SimpleExoPlayer mSimpleExoPlayer;
     private SimpleExoPlayerView mPlayerView;
+
+    private MediaSessionCompat mMediaSession;
+    private PlaybackStateCompat.Builder mStateBuilder;
+    private NotificationManager mNotificationManager;
 
     steps mySteps;
 
@@ -63,6 +70,8 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
         descTextView.setText(mySteps.getDescription());
 
         Log.i("StepVideoAct", mySteps.getVideoURL());
+
+        initializeMediaSession();
         initializePlayer(Uri.parse(mySteps.getVideoURL()));
 
     }
@@ -80,6 +89,80 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
             mSimpleExoPlayer.prepare(mediaSource);
             mSimpleExoPlayer.setPlayWhenReady(true);
         }
+    }
+
+    private void initializeMediaSession(){
+        mMediaSession = new MediaSessionCompat(this, LOG_TAG);
+
+        mMediaSession.setFlags(
+                MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS  |
+                        MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+
+        mMediaSession.setMediaButtonReceiver(null);
+
+        mStateBuilder = new PlaybackStateCompat.Builder()
+                .setActions(
+                        PlaybackStateCompat.ACTION_PLAY |
+                                PlaybackStateCompat.ACTION_PAUSE |
+                                PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS |
+                                PlaybackStateCompat.ACTION_PLAY_PAUSE);
+        mMediaSession.setPlaybackState(mStateBuilder.build());
+
+        mMediaSession.setCallback(new MySessionCallback());
+
+        mMediaSession.setActive(true);
+
+    }
+
+    private class MySessionCallback extends MediaSessionCompat.Callback {
+        @Override
+        public void onPlay() {
+            mSimpleExoPlayer.setPlayWhenReady(true);
+        }
+
+        @Override
+        public void onPause() {
+            mSimpleExoPlayer.setPlayWhenReady(false);
+        }
+
+        @Override
+        public void onSkipToPrevious() {
+            mSimpleExoPlayer.seekTo(0);
+        }
+    }
+
+    private void showNotification(PlaybackStateCompat state){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+        int icon;
+        String play_pause;
+        if(state.getState() == PlaybackStateCompat.STATE_PLAYING){
+            icon = R.drawable.exo_controls_pause;
+            play_pause = getString(R.string.pause);
+        } else {
+            icon = R.drawable.exo_controls_play;
+            play_pause = getString(R.string.play);
+        }
+
+        NotificationCompat.Action playPauseAction = new NotificationCompat.Action(
+                icon, play_pause, MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)
+        );
+
+        PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, StepVideoActivity.class), 0);
+
+        builder.setContentTitle(getString(R.string.app_name))
+                .setContentIntent(contentPendingIntent)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .addAction(playPauseAction)
+                .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle()
+                        .setMediaSession(mMediaSession.getSessionToken())
+                        .setShowActionsInCompactView(0,1));
+
+
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        mNotificationManager.notify(0, builder.build());
+
+
     }
 
     @Override
@@ -128,6 +211,9 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
         } else if((playbackState == ExoPlayer.STATE_READY)){
             Log.d(LOG_TAG, "onPlayerStateChanged: PAUSED");
         }
+
+        mMediaSession.setPlaybackState(mStateBuilder.build());
+        showNotification(mStateBuilder.build());
     }
 
     @Override
