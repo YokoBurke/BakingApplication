@@ -85,7 +85,13 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
     @Override
     protected void onPause(){
         super.onPause();
-        mSimpleExoPlayer.stop();
+        mSimpleExoPlayer.setPlayWhenReady(false);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        mSimpleExoPlayer.setPlayWhenReady(true);
     }
 
     private void releasePlayer() {
