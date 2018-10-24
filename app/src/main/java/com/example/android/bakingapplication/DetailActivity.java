@@ -49,6 +49,8 @@ public class DetailActivity extends AppCompatActivity{
         }
         Log.i(CLASS_NAME, "recipe is " + myRecipe.getName());
 
+        getSupportActionBar().setTitle(myRecipe.getName());
+
         myIngredients = myRecipe.getIngredients();
         mySteps = myRecipe.getSteps();
         int x = mySteps.size();
