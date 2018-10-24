@@ -132,7 +132,7 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
     }
 
     private void showNotification(PlaybackStateCompat state){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "M_CH_ID");
 
         int icon;
         String play_pause;
@@ -153,10 +153,11 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
         builder.setContentTitle(getString(R.string.app_name))
                 .setContentIntent(contentPendingIntent)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.ic_music_note)
                 .addAction(playPauseAction)
                 .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle()
                         .setMediaSession(mMediaSession.getSessionToken())
-                        .setShowActionsInCompactView(0,1));
+                        .setShowActionsInCompactView(0));
 
 
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
