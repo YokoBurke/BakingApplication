@@ -17,6 +17,7 @@
         card_view:cardCornerRadius ="4dp">
 
         <TextView
+            style="@style/card_steps"
             android:id="@+id/short_desc_steps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

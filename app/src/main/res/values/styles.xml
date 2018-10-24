@@ -11,15 +11,22 @@
     <style name="card_title">
         <item name="android:textColor">#bc5100</item>
         <item name="android:textSize">26sp</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
     </style>
 
     <style name="card_servings">
         <item name="android:textColor">#bc5100</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+
+    <style name="card_steps">
+        <item name="android:textColor">#bc5100</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
