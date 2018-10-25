@@ -12,6 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <ImageView
+        android:id="@+id/no_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_tv_off_24"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,6 +56,4 @@
             android:text="@string/steps_next"/>
 
     </LinearLayout>
-
-
 </LinearLayout>
