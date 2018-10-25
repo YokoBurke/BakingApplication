@@ -3,7 +3,6 @@ package com.example.android.bakingapplication.utilities;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,12 +54,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull IngredientsAdapter.MyViewHolder holder, int position) {
-        int myQuantity = myIngredients.get(position).getQuantity();
-        Log.i(LOG_TAG, "Quantity is " + Integer.toString(myIngredients.get(position).getQuantity()));
+        String myQuantity = myIngredients.get(position).getQuanity();
+
         String myMeasure = myIngredients.get(position).getMeasure();
         String myIngredient = myIngredients.get(position).getIngredient();
 
-        holder.quantityTextView.setText(Integer.toString(myQuantity));
+        holder.quantityTextView.setText(myQuantity);
         holder.measureTextView.setText(myMeasure);
         holder.ingredientTextView.setText(myIngredient);
 

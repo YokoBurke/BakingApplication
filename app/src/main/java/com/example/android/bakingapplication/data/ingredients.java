@@ -5,18 +5,21 @@ import android.os.Parcelable;
 
 public class ingredients implements Parcelable {
 
-    int quanity;
+    //@SerializedName("quantity")
+    String quantity;
+
     String measure;
     String ingredient;
 
-    public ingredients (int myQuantity, String myMeasure, String myIngredient){
-        quanity = myQuantity;
+    public ingredients (String myQuantity, String myMeasure, String myIngredient){
+
+        quantity = myQuantity;
         measure = myMeasure;
         ingredient = myIngredient;
     }
 
-    public int getQuanity() {
-        return quanity;
+    public String getQuanity() {
+        return quantity;
     }
 
     public String getMeasure(){
@@ -28,14 +31,14 @@ public class ingredients implements Parcelable {
     }
 
     private ingredients (Parcel inParcel){
-        quanity = inParcel.readInt();
+        quantity = inParcel.readString();
         measure = inParcel.readString();
         ingredient = inParcel.readString();
     }
 
     @Override
     public void writeToParcel(Parcel parcel, int i){
-        parcel.writeInt(quanity);
+        parcel.writeString(quantity);
         parcel.writeString(measure);
         parcel.writeString(ingredient);
     }
