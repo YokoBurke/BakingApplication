@@ -73,6 +73,7 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
         Log.i(LOG_TAG, "Video URL: " + mySteps.getVideoURL());
 
         if (mySteps.getVideoURL() == "") {
+            mSimpleExoPlayer.setPlayWhenReady(false);
             noVideoImageView.setVisibility(View.VISIBLE);
             mPlayerView.setVisibility(View.GONE);
             videoExists = false;
@@ -225,6 +226,7 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+        Log.i(LOG_TAG, "onPlayerSTateChanged Launched" + mSimpleExoPlayer.getPlaybackState());
         if((playbackState == ExoPlayer.STATE_READY) && playWhenReady){
             Log.d(LOG_TAG, "onPlayerStateChanged: PLAYING");
         } else if((playbackState == ExoPlayer.STATE_READY)){
