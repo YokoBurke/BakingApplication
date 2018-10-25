@@ -49,24 +49,20 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         int myLayoutId = R.layout.ingredient_item;
         View itemView = LayoutInflater.from(parent.getContext()).inflate(myLayoutId, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(itemView);
-
-        Log.i(LOG_TAG, "Adapter called.  OnCreateViewHolder");
         return myViewHolder;
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull IngredientsAdapter.MyViewHolder holder, int position) {
-        int myQuantity = myIngredients.get(position).getQuanity();
+        int myQuantity = myIngredients.get(position).getQuantity();
+        Log.i(LOG_TAG, "Quantity is " + Integer.toString(myIngredients.get(position).getQuantity()));
         String myMeasure = myIngredients.get(position).getMeasure();
         String myIngredient = myIngredients.get(position).getIngredient();
 
         holder.quantityTextView.setText(Integer.toString(myQuantity));
         holder.measureTextView.setText(myMeasure);
         holder.ingredientTextView.setText(myIngredient);
-
-        Log.i(LOG_TAG, "Constructor called");
-
 
     }
 
