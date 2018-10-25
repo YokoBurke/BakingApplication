@@ -11,6 +11,8 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.bakingapplication.data.steps;
@@ -39,6 +41,7 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
     private TextView stepIdTextView;
     private TextView shortDescTextView;
     private TextView descTextView;
+    private ImageView noVideoImageView;
 
     private SimpleExoPlayer mSimpleExoPlayer;
     private SimpleExoPlayerView mPlayerView;
@@ -49,6 +52,8 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
 
     steps mySteps;
 
+    private boolean videoExists;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +63,26 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
         shortDescTextView = (TextView) findViewById(R.id.steps_shortdescription);
         descTextView = (TextView) findViewById(R.id.steps_description);
         mPlayerView = (SimpleExoPlayerView) findViewById(R.id.playerView);
+        noVideoImageView = (ImageView) findViewById(R.id.no_video);
 
         Intent childIntent = getIntent();
         if (childIntent.hasExtra(Intent.EXTRA_TEXT)){
             mySteps = (steps) childIntent.getParcelableExtra(Intent.EXTRA_TEXT);
+        }
+
+        Log.i(LOG_TAG, "Video URL: " + mySteps.getVideoURL());
+
+        if (mySteps.getVideoURL() == "") {
+            noVideoImageView.setVisibility(View.VISIBLE);
+            mPlayerView.setVisibility(View.GONE);
+            videoExists = false;
+        } else {
+            noVideoImageView.setVisibility(View.GONE);
+            mPlayerView.setVisibility(View.VISIBLE);
+            videoExists = true;
+
+            initializeMediaSession();
+            initializePlayer(Uri.parse(mySteps.getVideoURL()));
         }
 
 
@@ -70,9 +91,6 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
         descTextView.setText(mySteps.getDescription());
 
         Log.i("StepVideoAct", mySteps.getVideoURL());
-
-        initializeMediaSession();
-        initializePlayer(Uri.parse(mySteps.getVideoURL()));
 
     }
 
