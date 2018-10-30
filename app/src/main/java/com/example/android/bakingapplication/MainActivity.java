@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
         recyclerView.setLayoutManager(mLayoutManager);
-
         getSupportLoaderManager().initLoader(SEARCH_LOADER, null, this);
     }
 
