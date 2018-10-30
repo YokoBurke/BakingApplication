@@ -29,13 +29,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView quantityTextView;
         public TextView measureTextView;
         public TextView ingredientTextView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            quantityTextView = (TextView) itemView.findViewById(R.id.text_quantity);
             measureTextView = (TextView) itemView.findViewById(R.id.text_measure);
             ingredientTextView = (TextView) itemView.findViewById(R.id.text_ingredient);
         }
@@ -59,8 +57,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         String myMeasure = myIngredients.get(position).getMeasure();
         String myIngredient = myIngredients.get(position).getIngredient();
 
-        holder.quantityTextView.setText(myQuantity);
-        holder.measureTextView.setText(myMeasure);
+        holder.measureTextView.setText(myQuantity + " " + myMeasure.toLowerCase());
         holder.ingredientTextView.setText(myIngredient);
 
     }
