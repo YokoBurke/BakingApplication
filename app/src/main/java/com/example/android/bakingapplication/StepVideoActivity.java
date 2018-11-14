@@ -43,6 +43,9 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
     private TextView descTextView;
     private ImageView noVideoImageView;
 
+    private TextView previousTextView;
+    private TextView nextTextView;
+
     private SimpleExoPlayer mSimpleExoPlayer;
     private SimpleExoPlayerView mPlayerView;
 
@@ -65,6 +68,9 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
         mPlayerView = (SimpleExoPlayerView) findViewById(R.id.playerView);
         noVideoImageView = (ImageView) findViewById(R.id.no_video);
 
+        previousTextView = (TextView) findViewById(R.id.steps_next);
+        nextTextView = (TextView) findViewById(R.id.steps_next);
+
         Intent childIntent = getIntent();
         if (childIntent.hasExtra(Intent.EXTRA_TEXT)){
             mySteps = (steps) childIntent.getParcelableExtra(Intent.EXTRA_TEXT);
@@ -72,8 +78,8 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
 
         Log.i(LOG_TAG, "Video URL: " + mySteps.getVideoURL());
 
-        if (mySteps.getVideoURL() == "") {
-            mSimpleExoPlayer.setPlayWhenReady(false);
+        if (mySteps.getVideoURL().isEmpty()) {
+            //mSimpleExoPlayer.setPlayWhenReady(false);
             noVideoImageView.setVisibility(View.VISIBLE);
             mPlayerView.setVisibility(View.GONE);
             videoExists = false;
@@ -86,10 +92,24 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
             initializePlayer(Uri.parse(mySteps.getVideoURL()));
         }
 
-
         stepIdTextView.setText(Integer.toString(mySteps.getId()));
         shortDescTextView.setText(mySteps.getShortDescription());
         descTextView.setText(mySteps.getDescription());
+
+        previousTextView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        nextTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         Log.i("StepVideoAct", mySteps.getVideoURL());
 
@@ -188,25 +208,35 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
     @Override
     protected void onPause(){
         super.onPause();
-        mSimpleExoPlayer.setPlayWhenReady(false);
+        if (videoExists) {
+            mSimpleExoPlayer.setPlayWhenReady(false);
+        }
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        mSimpleExoPlayer.setPlayWhenReady(true);
+
+        if (videoExists) {
+            mSimpleExoPlayer.setPlayWhenReady(true);
+        }
     }
 
     private void releasePlayer() {
+
+        if (videoExists) {
         mSimpleExoPlayer.stop();
         mSimpleExoPlayer.release();
         mSimpleExoPlayer = null;
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        releasePlayer();
+        if (videoExists) {
+            releasePlayer();
+        }
     }
 
     @Override
