@@ -2,6 +2,7 @@ package com.example.android.bakingapplication.utilities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,13 +15,14 @@ import com.example.android.bakingapplication.R;
 import com.example.android.bakingapplication.StepVideoActivity;
 import com.example.android.bakingapplication.data.steps;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewHolder> {
 
     private static String LOG_TAG = StepsAdapter.class.getSimpleName();
 
-    private List<steps> myStepsData;
+    private ArrayList<steps> myStepsData;
     private Context myContext;
     final private ListItemClickListner mOnClickListener;
 
@@ -28,7 +30,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewH
         void onListItemClick(int clickedItemIndex);
     }
 
-    public StepsAdapter(Context context, List<steps> StepsData, ListItemClickListner listener){
+    public StepsAdapter(Context context, ArrayList<steps> StepsData, ListItemClickListner listener){
         myStepsData = StepsData;
         myContext = context;
         mOnClickListener = listener;
@@ -56,6 +58,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewH
 
             Intent intent = new Intent(myContext, StepVideoActivity.class);
             intent.putExtra(Intent.EXTRA_TEXT, myStepsData.get(clickedPosition));
+            intent.putExtra("clicked_position", clickedPosition);
+
+            intent.putParcelableArrayListExtra("vlist", myStepsData);
+
             myContext.startActivity(intent);
 
         }
