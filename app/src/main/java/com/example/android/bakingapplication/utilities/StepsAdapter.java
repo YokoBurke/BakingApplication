@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,16 +26,18 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewH
     private ArrayList<steps> myStepsData;
     private Context myContext;
     final private ListItemClickListner mOnClickListener;
+    String recipeName;
 
     public interface ListItemClickListner{
         void onListItemClick(int clickedItemIndex);
     }
 
-    public StepsAdapter(Context context, ArrayList<steps> StepsData, ListItemClickListner listener){
+    public StepsAdapter(Context context, ArrayList<steps> StepsData, ListItemClickListner listener, String myrecipeName){
         myStepsData = StepsData;
         myContext = context;
         mOnClickListener = listener;
         Log.i(LOG_TAG, "the number of steps in constructor is " + Integer.toString(myStepsData.size()));
+
 
     }
 
@@ -53,12 +56,13 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyStepsViewH
 
         @Override
         public void onClick(View view) {
+
             int clickedPosition = getAdapterPosition();
             mOnClickListener.onListItemClick(clickedPosition);
 
             Intent intent = new Intent(myContext, StepVideoActivity.class);
             intent.putExtra(Intent.EXTRA_TEXT, myStepsData.get(clickedPosition));
-            intent.putExtra("clicked_position", clickedPosition);
+            intent.putExtra("recipe_name", recipeName);
 
             intent.putParcelableArrayListExtra("vlist", myStepsData);
 

@@ -64,6 +64,7 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
     int currentStep;
 
     private boolean videoExists;
+    String myRecipeName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +84,11 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
         if (childIntent.hasExtra(Intent.EXTRA_TEXT)){
             mySteps = (steps) childIntent.getParcelableExtra(Intent.EXTRA_TEXT);
             myStepsData = childIntent.getParcelableArrayListExtra("vlist");
-
+            myRecipeName = childIntent.getStringExtra("recipe_name");
             currentStep = mySteps.getId();
             Log.i(LOG_TAG, "Current Step is:" + currentStep);
         }
-
+        getSupportActionBar().setTitle(myRecipeName);
         Log.i(LOG_TAG, "Video URL: " + mySteps.getVideoURL());
 
         displayStepData();

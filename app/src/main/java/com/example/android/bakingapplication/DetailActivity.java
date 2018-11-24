@@ -53,6 +53,7 @@ public class DetailActivity extends AppCompatActivity{
 
         getSupportActionBar().setTitle(myRecipe.getName());
 
+
         myIngredients = myRecipe.getIngredients();
         mySteps = myRecipe.getSteps();
         int x = mySteps.size();
@@ -76,7 +77,7 @@ public class DetailActivity extends AppCompatActivity{
             public void onListItemClick(int clickedItemIndex) {
 
             }
-        });
+        }, myRecipe.getName());
 
         ingredientsRecyclerView.setLayoutManager(ingredientsLayoutManager);
         ingredientsRecyclerView.setAdapter(mIngredientsAdapter);
