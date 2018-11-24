@@ -31,6 +31,8 @@ public class DetailActivity extends AppCompatActivity{
     private IngredientsAdapter mIngredientsAdapter;
     private StepsAdapter mStepsAdapter;
 
+
+
     private RecyclerView.LayoutManager stepsLayoutManager;
     private RecyclerView.LayoutManager ingredientsLayoutManager;
 

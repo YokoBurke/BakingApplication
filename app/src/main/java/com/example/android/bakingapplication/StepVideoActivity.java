@@ -1,5 +1,6 @@
 package com.example.android.bakingapplication;
 
+import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -12,8 +13,10 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.bakingapplication.data.steps;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -34,6 +37,8 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.ArrayList;
+
 public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.EventListener  {
 
     private final String LOG_TAG = StepVideoActivity.class.getSimpleName();
@@ -43,8 +48,8 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
     private TextView descTextView;
     private ImageView noVideoImageView;
 
-    private TextView previousTextView;
-    private TextView nextTextView;
+    private Button previousButton;
+    private Button nextButton;
 
     private SimpleExoPlayer mSimpleExoPlayer;
     private SimpleExoPlayerView mPlayerView;
@@ -54,6 +59,9 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
     private NotificationManager mNotificationManager;
 
     steps mySteps;
+    private ArrayList<steps> myStepsData;
+
+    int currentStep;
 
     private boolean videoExists;
 
@@ -68,15 +76,70 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
         mPlayerView = (SimpleExoPlayerView) findViewById(R.id.playerView);
         noVideoImageView = (ImageView) findViewById(R.id.no_video);
 
-        previousTextView = (TextView) findViewById(R.id.steps_next);
-        nextTextView = (TextView) findViewById(R.id.steps_next);
+        previousButton = (Button) findViewById(R.id.steps_previous);
+        nextButton = (Button) findViewById(R.id.steps_next);
 
         Intent childIntent = getIntent();
         if (childIntent.hasExtra(Intent.EXTRA_TEXT)){
             mySteps = (steps) childIntent.getParcelableExtra(Intent.EXTRA_TEXT);
+            myStepsData = childIntent.getParcelableArrayListExtra("vlist");
+
+            currentStep = mySteps.getId();
+            Log.i(LOG_TAG, "Current Step is:" + currentStep);
         }
 
         Log.i(LOG_TAG, "Video URL: " + mySteps.getVideoURL());
+
+        displayStepData();
+
+
+        previousButton.setOnClickListener(new View.OnClickListener(){
+
+
+            @Override
+            public void onClick(View view) {
+
+               if (currentStep == 0){
+
+                    Toast.makeText(getApplicationContext(), "This is the first step.", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    currentStep--;
+                    mySteps = myStepsData.get(currentStep);
+                   Log.i(LOG_TAG, "Current Step after change:" + currentStep + mySteps.getShortDescription());
+                    displayStepData();
+                }
+
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                Log.i(LOG_TAG, "Hope it can reach here!" + Integer.toString(myStepsData.size()));
+
+                if (currentStep == myStepsData.size()-1){
+                    Toast.makeText(getApplicationContext(), "This is the last step.", Toast.LENGTH_SHORT).show();
+                }else {
+                    currentStep++;
+                    mySteps = myStepsData.get(currentStep);
+
+                    displayStepData();
+                }
+
+            }
+        });
+
+        Log.i("StepVideoAct", mySteps.getVideoURL());
+
+    }
+
+    private void displayStepData(){
+
+        Log.i(LOG_TAG, "display step data"+ mySteps.getShortDescription());
 
         if (mySteps.getVideoURL().isEmpty()) {
             //mSimpleExoPlayer.setPlayWhenReady(false);
@@ -92,27 +155,10 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
             initializePlayer(Uri.parse(mySteps.getVideoURL()));
         }
 
+
         stepIdTextView.setText(Integer.toString(mySteps.getId()));
         shortDescTextView.setText(mySteps.getShortDescription());
         descTextView.setText(mySteps.getDescription());
-
-        previousTextView.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        nextTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        Log.i("StepVideoAct", mySteps.getVideoURL());
-
     }
 
     private void initializePlayer(Uri mediaUri) {
@@ -124,10 +170,12 @@ public class StepVideoActivity extends AppCompatActivity implements ExoPlayer.Ev
 
             mSimpleExoPlayer.addListener(this);
 
-            MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(this, Util.getUserAgent(this, "BakingApplication")), new DefaultExtractorsFactory(), null, null);
-            mSimpleExoPlayer.prepare(mediaSource);
-            mSimpleExoPlayer.setPlayWhenReady(true);
+
         }
+
+        MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(this, Util.getUserAgent(this, "BakingApplication")), new DefaultExtractorsFactory(), null, null);
+        mSimpleExoPlayer.prepare(mediaSource);
+        mSimpleExoPlayer.setPlayWhenReady(true);
     }
 
     private void initializeMediaSession(){
