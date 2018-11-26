@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#09C"
+    android:background="#FFFDD0"
     android:padding="@dimen/widget_margin">
 
     <ListView
@@ -14,14 +14,24 @@
     <RelativeLayout
         android:id="@+id/widget_empty_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="2dp">
         <TextView
+            android:id="@+id/widget_empty_title"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="No Ingredient Data Available"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:layout_alignParentTop="true"
+            android:textSize="9sp"
+            android:text="Baking App"/>
+        <ImageView
+            android:paddingTop="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/widget_empty_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/outline_cake_black_24"/>
 
     </RelativeLayout>
 
