@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.bakingapplication.DetailActivity;
-import com.example.android.bakingapplication.R;
 import com.example.android.bakingapplication.data.recipe;
 
 import java.util.List;
